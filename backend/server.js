@@ -27,6 +27,7 @@ const mongoose = require('mongoose'); // Connecting to a database
 
 // (simply running posts-model.js; not importing/exporting)
 const postModel = require("./posts/posts-model.js"); 
+// require("./posts/posts-model.js"); 
 const Post = mongoose.model("Post"); // create and save the Post model
 
 
@@ -39,7 +40,7 @@ const db = mongoose.connection;
 
 // Basic route testing:
 app.get('/', (req,res) => {
-	res.send("app.get:/: res.send: Home");
+	res.send("app.get:/: res.send: Home Page");
 })
 
 // app.get('/posts', (req,res) => {
