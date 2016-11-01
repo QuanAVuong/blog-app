@@ -40,7 +40,7 @@ const db = mongoose.connection;
 
 // Basic route testing:
 app.get('/', (req,res) => {
-	res.send("app.get:/: res.send: Home Page");
+	res.send("app.get:/: res.send: Welcome To Our Blog");
 })
 
 // app.get('/posts', (req,res) => {
