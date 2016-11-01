@@ -30,8 +30,14 @@
 const mongoose = require('mongoose');
 const blogPostSchema = mongoose.Schema({
   title: {type: String, require: "true"},
-  text: String
+	text: String
 });
+
+// const blogUserSchema = mongoose.Schema({
+//   name: {type: String, require: "true"},
+//   comments: String,
+
+// });
 
 
 // //================= MODELS =================
@@ -43,3 +49,4 @@ const blogPostSchema = mongoose.Schema({
 // Second argument: schema
 // //Make sure you require in mongoose. You typically want to do this in the same file as your schema
 mongoose.model("Post", blogPostSchema)
+// mongoose.model("User", blogUserSchema)

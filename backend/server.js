@@ -21,11 +21,12 @@
 
 // It's important to note that we'll eventually need to require in our Mongoose models here BEFORE we create our express server, in order for our database to run correctly:
 
-const mongoose = require('mongoose'); // Connecting to a database
 const express = require('express'); // Getting started with Express
 const app = express(); //Initialize express app & save it as `app` variable
+const mongoose = require('mongoose'); // Connecting to a database
 
-const postModel = require("./posts/posts-model.js"); // simply running posts-model.js; not importing/exporting
+// (simply running posts-model.js; not importing/exporting)
+const postModel = require("./posts/posts-model.js"); 
 const Post = mongoose.model("Post"); // create and save the Post model
 
 
@@ -36,13 +37,38 @@ mongoose.connect('mongodb://localhost/blog-app');
 //Store connection as variable
 const db = mongoose.connection;
 
-// Testing:
+// Basic route testing:
 app.get('/', (req,res) => {
 	res.send("app.get:/: res.send: Home");
 })
 
+// app.get('/posts', (req,res) => {
+// 	res.send("app.get:/posts: This is a posts");
+// })
+
+//Creating a test post everytime the server refreshes
+Post.create(
+	{title: "test post 1"},
+	(err, data) => {
+		if (err) console.log('Error with database!');
+		else console.log('Post created!');
+	}
+)
+
+// Find all posts and log to console
+Post.find( {}, (err, data) => {
+	console.log('Database data found!', data);
+})
+
+//Find all posts that match specific title
+Post.find({title: 'find this title'}, (err, data) => {
+  console.log('Database data found!', data);
+})
+
 app.get('/posts', (req,res) => {
-	res.send("app.get:/posts: This is a posts");
+	Post.find( {}, (err, data) => {
+		res.send(data);
+	})	
 })
 
 
@@ -52,25 +78,6 @@ db.on('open', () => {
   
   app.listen(4444, () => {
     console.log('App listening on port 4444');
-
-    //Creating a test post everytime the server refreshes
-    Post.create(
-    	{title: "test post 1"},
-    	(err, data) => {
-    		if (err) console.log('Error with database!');
-    		else console.log('Post created!');
-    	}
-    )
-    
-    // Find all posts and log to console
-    Post.find( {}, (err, data) => {
-    	console.log('Database data found!', data);
-    })
-
-    //Find all posts that match specific title
-    Post.find({title: 'find this title'}, (err, data) => {
-      console.log('Database data found!', data);
-    })
 
   });
 
